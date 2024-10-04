@@ -91,7 +91,7 @@ function initialize_fc_lite() {
             const author = document.createElement('div');
             author.className = 'card-author';
             const authorImg = document.createElement('img');
-            authorImg.className = 'no-lightbox';
+            authorImg.className = 'no-lightbox nowebp';
             authorImg.src = article.avatar || UserConfig.error_img; // 使用默认头像
             authorImg.onerror = () => authorImg.src = UserConfig.error_img; // 头像加载失败时使用默认头像
             author.appendChild(authorImg);
@@ -108,7 +108,7 @@ function initialize_fc_lite() {
             card.appendChild(date);
 
             const bgImg = document.createElement('img');
-            bgImg.className = 'card-bg no-lightbox';
+            bgImg.className = 'card-bg no-lightbox nowebp';
             bgImg.src = article.avatar || UserConfig.error_img;
             bgImg.onerror = () => bgImg.src = UserConfig.error_img; // 头像加载失败时使用默认头像
             card.appendChild(bgImg);
