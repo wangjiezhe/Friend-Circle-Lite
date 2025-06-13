@@ -1,3 +1,4 @@
+import logging
 import requests
 import re
 from friend_circle_lite.get_info import check_feed, parse_feed
@@ -5,9 +6,16 @@ import json
 import os
 
 # 标准化的请求头
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+HEADERS_JSON = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/123.0.0.0 Safari/537.36 "
+        "(Friend-Circle-Lite/1.0; +https://github.com/willow-god/Friend-Circle-Lite)"
+    ),
+    "X-Friend-Circle": "1.0"
 }
+
 
 def extract_emails_from_issues(api_url):
     """
@@ -25,11 +33,11 @@ def extract_emails_from_issues(api_url):
     }
     """
     try:
-        response = requests.get(api_url, headers=headers)
+        response = requests.get(api_url, headers=HEADERS_JSON, timeout=10)
         response.raise_for_status()
         issues = response.json()
     except Exception as e:
-        print(f"无法获取该链接：{api_url}\n出现的问题为：{e}")
+        logging.error(f"无法获取 GitHub issues 数据，错误信息: {e}")
         return None
 
     email_pattern = re.compile(r'^\[邮箱订阅\](.+)$')
@@ -62,7 +70,7 @@ def get_latest_articles_from_link(url, count=5, last_articles_path="./rss_subscr
     session = requests.Session()
     feed_type, feed_url = check_feed(url, session)
     if feed_type == 'none':
-        print(f"无法访问 {url} 的 feed")
+        logging.error(f"无法获取 {url} 的文章数据")
         return None
 
     # 获取最新的文章数据
@@ -86,7 +94,7 @@ def get_latest_articles_from_link(url, count=5, last_articles_path="./rss_subscr
         if article['link'] not in last_titles:
             updated_articles.append(article)
     
-    print(f"从 {url} 获取到 {len(latest_articles)} 篇文章，其中 {len(updated_articles)} 篇为新文章")
+    logging.info(f"从 {url} 获取到 {len(latest_articles)} 篇文章，其中 {len(updated_articles)} 篇为新文章")
 
     # 更新本地存储的文章数据
     with open(local_file, 'w', encoding='utf-8') as file:

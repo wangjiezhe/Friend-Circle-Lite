@@ -60,11 +60,9 @@ smtp:
 #   name:               友链名称
 #   url:                指定的RSS地址
 specific_RSS:
+  - name: "阮一峰"
+    url: "http://feeds.feedburner.com/ruanyifeng"
   - name: "bitbili"
     url: "https://bitbili.net/feeds/rss.xml"
-  - name: "无辄的栈"
-    url: "https://www.zackwu.com/feed.xml"
-  - name: "倾丞の小窝"
-    url: "https://blog.qcmoe.com/rss.php"
   - name: "HighWayToHell"
     url: "https://blog.druggo.org/feed/atom"
