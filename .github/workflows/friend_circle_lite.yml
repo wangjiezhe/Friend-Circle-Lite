@@ -35,7 +35,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Download last_articles.json artifact
-      uses: dawidd6/action-download-artifact@v6
+      uses: dawidd6/action-download-artifact@v20
       with:
         github_token: ${{secrets.GITHUB_TOKEN}}
         branch: main
