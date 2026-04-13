@@ -52,7 +52,7 @@ jobs:
         python run.py
 
     - name: Upload last_articles.json as artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: 'last_articles'
         path: './rss_subscribe/last_articles.json'
